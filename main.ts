@@ -100,8 +100,11 @@ const POLL_INTERVAL_MS = 100;
 const PROBE_TIMEOUT_MS = 5000;
 /** The most bytes of one client request body this server reads. */
 const MAX_BODY_BYTES = 32 * 1024 * 1024;
-/** Primaries planned per provider: budgets run 4-15 a trial, so three is safe. */
-const SOFT_CAP_PER_PROVIDER = 3;
+/** Primaries planned per provider: budgets run 4-15 a trial. Three spreads
+ * the load wide but pushes plain requests to 1434-rated models; five keeps
+ * more requests on the 1470-1475 models while a failure-schedule hit still
+ * fails over cleanly to the next candidate. */
+const SOFT_CAP_PER_PROVIDER = 5;
 
 const ENV_URL = (process.env.MAKEFUN_ENV_URL ?? '').replace(/\/+$/, '');
 const PROMPT_FILE = process.env.MAKEFUN_PROMPT_FILE ?? '';
